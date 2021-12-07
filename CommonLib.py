@@ -283,9 +283,9 @@ Comment:
 
 '''
 def get_afl_tmux_command(root_directory, program_name, type, power_schedule, step, task_id, process_id):
-	afl_path            = os.path.join(root_directory, "..", "afl-2.52b", "afl-fuzz")
+	afl_path            = os.path.join(root_directory, "afl-2.52b", "afl-fuzz")
 	input_directory     = os.path.join(root_directory, "input", program_name, "in")
-	output_directory    = os.path.join("/mnt", "ssd", "output", program_name, str(task_id))
+	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
 
 	cmd_line = ""
@@ -322,7 +322,7 @@ Comment:
 
 '''
 def run_afl_fuzzer_tmux(root_directory, program_name, task_count, process_count):
-	tmux_name = "DirectedFuzzer-" + program_name
+	tmux_name = program_name
 	cmd_line = ""
 
 	for i in range(0, task_count):
