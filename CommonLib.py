@@ -138,8 +138,8 @@ Comment:
 '''
 def get_aflplusplus_tmux_command(root_directory, program_name, type, task_id, process_id):
 	afl_path            = os.path.join(root_directory, "AFLplusplus", "afl-fuzz")
-	input_directory     = os.path.join(root_directory, "input", program_name, "in")
-	output_directory    = os.path.join("/output", program_name, str(task_id))
+	input_directory     = os.path.join(root_directory, "input")
+	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
 
 	input_type			= get_input_type(program_name)

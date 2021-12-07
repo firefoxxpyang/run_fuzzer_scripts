@@ -70,7 +70,7 @@ if __name__ == '__main__':
     
     if "AFL++" == g_fuzzer_name:
         if "cxxfilt" == g_file_name:
-            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 1, 2)
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
         elif "xmllint" == g_file_name:
             CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         else:
@@ -86,7 +86,7 @@ if __name__ == '__main__':
 
     elif "AFL" == g_fuzzer_name:
         if "cxxfilt" == g_file_name:
-            CommonLib.run_afl_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 1, 2)
+            CommonLib.run_afl_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
         elif "xmllint" == g_file_name:
             CommonLib.run_afl_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         else:
