@@ -428,9 +428,9 @@ Comment:
 
 '''
 def get_qsym_tmux_command(root_directory, program_name, type, power_schedule, step, task_id, process_id):
-	afl_path            = os.path.join(root_directory, "..", "afl-2.52b", "afl-fuzz")
-	input_directory     = os.path.join(root_directory, "input", program_name, "in")
-	output_directory    = os.path.join("mnt", "ssd", "output", program_name, str(task_id))
+	afl_path            = os.path.join(root_directory, "afl-2.52b", "afl-fuzz")
+	input_directory     = os.path.join(root_directory, "input")
+	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
 
 	cmd_line = ""

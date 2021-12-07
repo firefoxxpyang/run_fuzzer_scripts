@@ -73,13 +73,25 @@ if __name__ == '__main__':
             CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
         elif "xmllint" == g_file_name:
             CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
-        else:
-            print("Wrong target program of AFL++")
-
-    elif "QSYM" == g_fuzzer_name:
-        if "cxxfilt" == g_file_name:
-            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
-        elif "xmllint" == g_file_name:
+        elif "readpng" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "guetzli-2017-3-30-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "json-2017-02-12-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libpng-1.2.56-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libxml2-v2.9.2-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "freetype2-2017-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "harfbuzz-1.3.2-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libjpeg-turbo-07-2017-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libpng2-1.2.56-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "openssl-1.0.2d-binary" == g_file_name:
             CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         else:
             print("Wrong target program of AFL++")
@@ -89,8 +101,37 @@ if __name__ == '__main__':
             CommonLib.run_afl_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
         elif "xmllint" == g_file_name:
             CommonLib.run_afl_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "readpng" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "guetzli-2017-3-30-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "json-2017-02-12-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libpng-1.2.56-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libxml2-v2.9.2-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "freetype2-2017-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "harfbuzz-1.3.2-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libjpeg-turbo-07-2017-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libpng2-1.2.56-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)        
+        elif "openssl-1.0.2d-binary" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         else:
             print("Wrong target program of AFL")
+
+    elif "QSYM" == g_fuzzer_name:
+        if "cxxfilt" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
+        elif "xmllint" == g_file_name:
+            CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        else:
+            print("Wrong target program of AFL++")
+
     elif "SYMQEMU" == g_fuzzer_name:
         if "cxxfilt" == g_file_name:
             CommonLib.run_aflplusplus_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
