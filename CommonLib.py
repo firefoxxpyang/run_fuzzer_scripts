@@ -1,5 +1,4 @@
 import argparse
-import networkx as nx
 import re
 import os
 import sys
@@ -282,7 +281,7 @@ Result:
 Comment:
 
 '''
-def get_afl_tmux_command(root_directory, program_name, type, power_schedule, step, task_id, process_id):
+def get_afl_tmux_command(root_directory, program_name, type, task_id, process_id):
 	afl_path            = os.path.join(root_directory, "afl-2.52b", "afl-fuzz")
 	input_directory     = os.path.join(root_directory, "input", program_name, "in")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
@@ -298,8 +297,6 @@ def get_afl_tmux_command(root_directory, program_name, type, power_schedule, ste
 		cmd_line = cmd_line + " -S " + "Slave" + str(process_id)
 	cmd_line = cmd_line + " -Q "
 	cmd_line = cmd_line + " -m none "
-	cmd_line = cmd_line + " -p " + power_schedule
-	cmd_line = cmd_line + " -P " + str(step)
 	cmd_line = cmd_line + " " + program_path
 
 	#print(cmd_line)
@@ -321,7 +318,7 @@ Result:
 Comment:
 
 '''
-def run_afl_fuzzer_tmux(root_directory, program_name, task_count, process_count):
+def run_afl_fuzzer_tmux(root_directory, program_name,type, task_count, process_count):
 	tmux_name = program_name
 	cmd_line = ""
 
@@ -374,7 +371,7 @@ def run_afl_fuzzer_tmux(root_directory, program_name, task_count, process_count)
 				# master
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = get_aflplusplus_tmux_command(root_directory, program_name, "Master", "FAST", 30, i, j)
+				fuzz_cmd_line = get_afl_tmux_command(root_directory, program_name, "Master", i, j)
 				#print(fuzz_cmd_line)
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
@@ -386,7 +383,7 @@ def run_afl_fuzzer_tmux(root_directory, program_name, task_count, process_count)
 				# symbolic execution
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = get_aflplusplus_tmux_command(root_directory, program_name, "Slave", "FAST", 30, i, j)
+				fuzz_cmd_line = get_afl_tmux_command(root_directory, program_name, "Slave", i, j)
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
 				print(cmd_line)
@@ -397,7 +394,7 @@ def run_afl_fuzzer_tmux(root_directory, program_name, task_count, process_count)
 				# other slave
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = cmd_line + get_aflplusplus_tmux_command(root_directory, program_name, "Slave", "FAST", 30,  i, j)
+				fuzz_cmd_line = cmd_line + get_afl_tmux_command(root_directory, program_name, "Slave", i, j)
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
 				print(cmd_line)
