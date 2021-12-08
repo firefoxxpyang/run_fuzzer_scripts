@@ -281,7 +281,7 @@ Result:
 Comment:
 
 '''
-def get_afl_tmux_command(root_directory, program_name, type, timeout, task_id, process_id):
+def get_afl_tmux_command(root_directory, program_name, type, task_id, process_id):
 	afl_path            = os.path.join(root_directory, "afl-2.52b", "afl-fuzz")
 	input_directory     = os.path.join(root_directory, "input", program_name, "in")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
@@ -417,10 +417,9 @@ FunctionName:
 	get_aflplusplus_tmux_command
 
 Argument:
-	root_directory
-	program_name
-	power_schedule
-	step
+	root_directory					
+	program_name					program name
+	type							Master or Slave
 	task_id
 	process_id
 
@@ -435,6 +434,7 @@ def get_qsym_tmux_afl_command(root_directory, program_name, type, task_id, proce
 	input_directory     = os.path.join(root_directory, "input", program_name, "in")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
+	input_type			= get_input_type(program_name)
 
 	cmd_line = ""
 	cmd_line = cmd_line + afl_path
@@ -446,7 +446,12 @@ def get_qsym_tmux_afl_command(root_directory, program_name, type, task_id, proce
 		cmd_line = cmd_line + " -S " + "Slave" + str(process_id)
 	cmd_line = cmd_line + " -Q "
 	cmd_line = cmd_line + " -m none "
-	cmd_line = cmd_line + " " + program_path
+	if "file" == input_type:
+		print("file")
+		cmd_line = cmd_line + " " + program_path + " @@"
+	elif "stdin" == input_type:
+		print("stdin")
+		cmd_line = cmd_line + " " + program_path
 
 	#print(cmd_line)
 	return cmd_line
@@ -470,22 +475,29 @@ Comment:
 	bin/run_qsym_afl.py -a afl-slave -o $OUTPUT -n qsym -- $QSYM_CMDLINE
 
 '''
-def get_qsym_tmux_pintool_command(root_directory, program_name, type, task_id ):
-	qsym_script_path    = os.path.join(root_directory, "qsym", "bin")
+def get_qsym_tmux_pintool_command(root_directory, program_name, task_id, process_id ):
+	qsym_script_path    = os.path.join(root_directory, "qsym", "bin", "run_qsym_afl.py")
 	input_directory     = os.path.join(root_directory, "input", program_name, "in")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
+	input_type			= get_input_type(program_name)
 
 	cmd_line = ""
 	cmd_line = cmd_line + qsym_script_path
 	cmd_line = cmd_line + " -i " + input_directory
 	cmd_line = cmd_line + " -o " + output_directory
-	cmd_line = cmd_line + " " + program_path
+	cmd_line = cmd_line + " -a " + "Slave" + str(process_id)
+	cmd_line = cmd_line + " -n qsym " + output_directory
+	cmd_line = cmd_line + " -- " + program_path
 
-	if "file" == type:
+	
+	if "file" == input_type:
 		print("file")
-	elif "stdin" == type:
+
+	elif "stdin" == input_type:
 		print("stdin")
+		
+
 
 	#print(cmd_line)
 	return cmd_line
@@ -559,7 +571,8 @@ def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, proc
 				# master
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = get_qsym_tmux_afl_command(root_directory, program_name, "Master", "FAST", 30, i, j)
+				fuzz_cmd_line = get_qsym_tmux_afl_command(root_directory, program_name,timeout , i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
 				#print(fuzz_cmd_line)
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
@@ -571,7 +584,8 @@ def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, proc
 				# symbolic execution
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = get_qsym_tmux_pintool_command(root_directory, program_name, "Slave", "FAST", 30, i, j)
+				fuzz_cmd_line = get_qsym_tmux_pintool_command(root_directory, program_name, i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
 				print(cmd_line)
@@ -582,7 +596,8 @@ def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, proc
 				# other slave
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = cmd_line + get_qsym_tmux_afl_command(root_directory, program_name, "Slave", "FAST", 30,  i, j)
+				fuzz_cmd_line = cmd_line + get_qsym_tmux_afl_command(root_directory, program_name, i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
 				print(cmd_line)
