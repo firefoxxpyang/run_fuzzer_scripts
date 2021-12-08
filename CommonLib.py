@@ -467,7 +467,7 @@ Comment:
 
 '''
 def run_qsym_tmux(root_directory, program_name, task_count, process_count):
-	tmux_name = "DirectedFuzzer-" + program_name
+	tmux_name = program_name
 	cmd_line = ""
 
 	for i in range(0, task_count):
