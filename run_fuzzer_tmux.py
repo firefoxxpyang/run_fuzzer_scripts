@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     elif "QSYM" == g_fuzzer_name:
         if "cxxfilt" == g_file_name:
-            CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
+            CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 1, 3)
         elif "xmllint" == g_file_name:
             CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         elif "readpng" == g_file_name:
@@ -149,7 +149,6 @@ if __name__ == '__main__':
             CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)        
         elif "openssl-1.0.2d-binary" == g_file_name:
             CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
-        else:
         else:
             print("Wrong target program of AFL++")
 
