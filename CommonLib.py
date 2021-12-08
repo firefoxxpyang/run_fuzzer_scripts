@@ -571,7 +571,7 @@ def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, proc
 				# master
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = get_qsym_tmux_afl_command(root_directory, program_name,timeout , i, j)
+				fuzz_cmd_line = get_qsym_tmux_afl_command(root_directory, program_name, "Master", i, j)
 				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
 				#print(fuzz_cmd_line)
 
@@ -596,7 +596,7 @@ def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, proc
 				# other slave
 				cmd_line = ""
 				fuzz_cmd_line = ""
-				fuzz_cmd_line = cmd_line + get_qsym_tmux_afl_command(root_directory, program_name, i, j)
+				fuzz_cmd_line = cmd_line + get_qsym_tmux_afl_command(root_directory, program_name, "Slave", i, j)
 				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
 
 				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
