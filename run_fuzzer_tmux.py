@@ -126,7 +126,7 @@ if __name__ == '__main__':
 
     elif "QSYM" == g_fuzzer_name:
         if "cxxfilt" == g_file_name:
-            CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 1, 3)
+            CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         elif "xmllint" == g_file_name:
             CommonLib.run_qsym_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         elif "readpng" == g_file_name:
