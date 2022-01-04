@@ -713,10 +713,8 @@ def get_symqemu_tmux_solver_command(root_directory, program_name, task_id, proce
 	
 	if "file" == input_type:
 		print("file")
-
-	elif "stdin" == input_type:
-		print("stdin")
-
+		cmd_line = cmd_line + " @@"
+	
 	#print(cmd_line)
 	return cmd_line
 
