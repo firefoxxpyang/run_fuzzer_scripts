@@ -287,6 +287,10 @@ def get_afl_tmux_command(root_directory, program_name, type, task_id, process_id
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
 
+	input_type			= get_input_type(program_name)
+	if None == input_type:
+		return -1
+
 	cmd_line = ""
 	cmd_line = cmd_line + afl_path
 	cmd_line = cmd_line + " -i " + input_directory
@@ -298,7 +302,9 @@ def get_afl_tmux_command(root_directory, program_name, type, task_id, process_id
 	cmd_line = cmd_line + " -Q "
 	cmd_line = cmd_line + " -m none "
 	cmd_line = cmd_line + " -- " + program_path
-
+	if "file" == input_type:
+		cmd_line = cmd_line + " @@"
+		
 	#print(cmd_line)
 	return cmd_line
 
