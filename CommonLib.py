@@ -697,8 +697,8 @@ Comment:
 
 '''
 def get_symqemu_tmux_solver_command(root_directory, program_name, task_id, process_id ):
-	symqemu_path		= os.path.join(root_directory, "symqemu", )
-	fuzzer_helper_path	= os.path.join(root_directory, "root", "bin", "symcc_fuzzing_helper")
+	symqemu_path		= os.path.join(root_directory, "symqemu", "build", "x86_64-linux-user", "symqemu-x86_64" )
+	fuzzer_helper_path	= os.path.join(root_directory, "root", ".cargo", "bin", "symcc_fuzzing_helper")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
 	input_type			= get_input_type(program_name)
