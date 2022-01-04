@@ -304,7 +304,7 @@ def get_afl_tmux_command(root_directory, program_name, type, task_id, process_id
 	cmd_line = cmd_line + " -- " + program_path
 	if "file" == input_type:
 		cmd_line = cmd_line + " @@"
-		
+
 	#print(cmd_line)
 	return cmd_line
 
@@ -452,12 +452,9 @@ def get_qsym_tmux_afl_command(root_directory, program_name, type, task_id, proce
 		cmd_line = cmd_line + " -S " + "Slave" + str(process_id)
 	cmd_line = cmd_line + " -Q "
 	cmd_line = cmd_line + " -m none "
+	cmd_line = cmd_line + " -- " + program_path
 	if "file" == input_type:
-		print("file")
-		cmd_line = cmd_line + " -- " + program_path + " @@"
-	elif "stdin" == input_type:
-		print("stdin")
-		cmd_line = cmd_line + " -- " + program_path
+		cmd_line = cmd_line + " @@"
 
 	#print(cmd_line)
 	return cmd_line
