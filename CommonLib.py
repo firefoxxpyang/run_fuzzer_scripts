@@ -654,7 +654,7 @@ Comment:
 
 '''
 def get_symqemu_tmux_afl_command(root_directory, program_name, type, task_id, process_id):
-	afl_path            = os.path.join(root_directory, "afl-2.52b", "afl-fuzz")
+	afl_path            = os.path.join(root_directory, "AFL", "afl-fuzz")
 	input_directory     = os.path.join(root_directory, "input", program_name, "in")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
@@ -670,9 +670,9 @@ def get_symqemu_tmux_afl_command(root_directory, program_name, type, task_id, pr
 		cmd_line = cmd_line + " -S " + "Slave" + str(process_id)
 	cmd_line = cmd_line + " -Q "
 	cmd_line = cmd_line + " -m none "
+	cmd_line = cmd_line + + " -- " + program_path
 	if "file" == input_type:
-		print("file")
-		cmd_line = cmd_line + " -- " + program_path + " @@"
+		cmd_line = cmd_line + " @@"
 
 	#print(cmd_line)
 	return cmd_line
@@ -697,17 +697,19 @@ Comment:
 
 '''
 def get_symqemu_tmux_solver_command(root_directory, program_name, task_id, process_id ):
-	qsym_script_path    = os.path.join(root_directory, "qsym", "bin", "run_qsym_afl.py")
+	symqemu_path		= os.path.join(root_directory, "symqemu", )
+	fuzzer_helper_path	= os.path.join(root_directory, "root", "bin", "symcc_fuzzing_helper")
 	output_directory    = os.path.join(root_directory, "output", program_name, str(task_id))
 	program_path        = os.path.join(root_directory, "target_bin", program_name)
 	input_type			= get_input_type(program_name)
 
 	cmd_line = ""
-	cmd_line = cmd_line + qsym_script_path
+	cmd_line = cmd_line + fuzzer_helper_path
 	cmd_line = cmd_line + " -o " + output_directory
 	cmd_line = cmd_line + " -a " + "Slave" + str(process_id - 1)
-	cmd_line = cmd_line + " -n qsym "
-	cmd_line = cmd_line + " -- " + program_path
+	cmd_line = cmd_line + " -n symqemu "
+	cmd_line = cmd_line + " -- " + symqemu_path
+	cmd_line = cmd_line + " " + program_path
 	
 	if "file" == input_type:
 		print("file")
