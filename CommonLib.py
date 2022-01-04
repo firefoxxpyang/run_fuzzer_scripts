@@ -492,7 +492,7 @@ def get_qsym_tmux_pintool_command(root_directory, program_name, task_id, process
 	cmd_line = cmd_line + " -- " + program_path
 	
 	if "file" == input_type:
-		cmd_line = cmd_line + " %"
+		cmd_line = cmd_line + " @@"
 		print("file")
 
 	#print(cmd_line)
