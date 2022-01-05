@@ -622,6 +622,7 @@ def get_symqemu_tmux_aflpp_command(root_directory, program_name, type, task_id, 
 	cmd_line = cmd_line + " -o " + output_directory
 	if "Master" == type:
 		cmd_line = cmd_line + " -M " + "Master" + str(process_id)
+		cmd_line = cmd_line + " -D "
 	elif "Slave" == type:
 		cmd_line = cmd_line + " -S " + "Slave" + str(process_id)
 	cmd_line = cmd_line + " -Q "
