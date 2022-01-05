@@ -154,7 +154,7 @@ if __name__ == '__main__':
 
     elif "SYMQEMU" == g_fuzzer_name:
         if "cxxfilt" == g_file_name:
-            CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 2)
+            CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 15, 3)
         elif "xmllint" == g_file_name:
             CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         elif "freetype2-2017-binary" == g_file_name:
