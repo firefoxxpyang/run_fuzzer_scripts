@@ -12,6 +12,10 @@ import global_var
 #######################################################################################################################################
 # global start
 
+def get_program_tmux_name(program_name):
+	tmux_name = program_name.replace(".", "_")
+	return tmux_name
+
 def get_program_binary_name(program_name):
 	result_name = ""
 	if program_name in global_var.cxxfilt_cves:
@@ -182,7 +186,7 @@ Comment:
 
 '''
 def run_aflplusplus_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
-	tmux_name = program_name
+	tmux_name = get_program_tmux_name(program_name)
 	cmd_line = ""
 
 	for i in range(0, task_count):
@@ -325,7 +329,7 @@ Comment:
 
 '''
 def run_afl_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
-	tmux_name = program_name
+	tmux_name = get_program_tmux_name(program_name)
 	cmd_line = ""
 
 	for i in range(0, task_count):
@@ -515,7 +519,7 @@ Comment:
 
 '''
 def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
-	tmux_name = program_name
+	tmux_name = get_program_tmux_name(program_name)
 	cmd_line = ""
 
 	for i in range(0, task_count):
@@ -736,7 +740,7 @@ Comment:
 
 '''
 def run_symqemu_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
-	tmux_name = program_name
+	tmux_name = get_program_tmux_name(program_name)
 	cmd_line = ""
 
 	for i in range(0, task_count):
