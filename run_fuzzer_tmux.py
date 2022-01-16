@@ -159,6 +159,12 @@ if __name__ == '__main__':
             CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         elif "freetype2-2017-binary" == g_file_name:
             CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "guetzli-2017-3-30-binary" == g_file_name:
+            CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "json-2017-02-12-binary" == g_file_name:
+            CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
+        elif "libpng-1.2.56-binary" == g_file_name:
+            CommonLib.run_symqemu_fuzzer_tmux(g_root_directory, g_file_name, g_timeout, 10, 3)
         else:
             print("Wrong target program of AFL")
     
