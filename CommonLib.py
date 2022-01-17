@@ -305,7 +305,7 @@ def get_afl_tmux_command(root_directory, program_name, type, task_id, process_id
 		cmd_line = cmd_line + " -S " + "Slave" + str(process_id)
 	cmd_line = cmd_line + " -Q "
 	cmd_line = cmd_line + " -m none "
-	if "" == program_name:
+	if "guetzli-2017-3-30-binary" == program_name:
 		cmd_line = cmd_line + " -t 500 "
 	cmd_line = cmd_line + " -- " + program_path
 	if "file" == input_type:
