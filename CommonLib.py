@@ -518,8 +518,8 @@ Result:
 
 
 Comment:
+	OLD three processes
 
-'''
 def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
 	tmux_name = get_program_tmux_name(program_name)
 	cmd_line = ""
@@ -605,6 +605,84 @@ def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, proc
 				print(cmd_line)
 				os.system(cmd_line)
 				time.sleep(1)
+
+	print("[run_cxxfilt_fuzzer_tmux] ........ ok")
+'''
+
+def run_qsym_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
+	tmux_name = get_program_tmux_name(program_name)
+	cmd_line = ""
+
+	for i in range(0, task_count):
+		# init directory
+		output_directory = os.path.join(root_directory, "output", program_name, str(i))
+		print(output_directory)
+
+		if os.path.exists(output_directory):
+			shutil.rmtree(output_directory)
+
+		os.makedirs(output_directory)
+
+		# start tmux
+		current_window_name = program_name + "_" + str(i)
+		cmd_line ="tmux send-keys -t %s 'tmux new-window -n %s' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux split-window -v' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux split-window -h' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+		
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -U' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+		
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux split-window -h' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t 0' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+		
+		current_window_name = program_name + "_" + str(i)
+		for j in range(0, process_count):
+			print("current i:%d \tj:%d" % ( i, j ))
+			if 0 == j:
+				# master
+				cmd_line = ""
+				fuzz_cmd_line = ""
+				fuzz_cmd_line = get_qsym_tmux_afl_command(root_directory, program_name, "Master", i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
+				#print(fuzz_cmd_line)
+
+				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
+				print(cmd_line)
+				os.system(cmd_line)
+				time.sleep(1)
+
+			else:
+				# symbolic execution
+				cmd_line = ""
+				fuzz_cmd_line = ""
+				fuzz_cmd_line = get_qsym_tmux_pintool_command(root_directory, program_name, i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
+
+				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
+				print(cmd_line)
+				os.system(cmd_line)
+				time.sleep(1)
+			
 
 	print("[run_cxxfilt_fuzzer_tmux] ........ ok")
 
@@ -739,8 +817,8 @@ Result:
 
 
 Comment:
+	OLD Thress processes
 
-'''
 def run_symqemu_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
 	tmux_name = get_program_tmux_name(program_name)
 	cmd_line = ""
@@ -828,7 +906,84 @@ def run_symqemu_fuzzer_tmux(root_directory, program_name, timeout, task_count, p
 				time.sleep(1)
 
 	print("[run_cxxfilt_fuzzer_tmux] ........ ok")
+'''
 
+def run_symqemu_fuzzer_tmux(root_directory, program_name, timeout, task_count, process_count):
+	tmux_name = get_program_tmux_name(program_name)
+	cmd_line = ""
+
+	for i in range(0, task_count):
+		# init directory
+		output_directory = os.path.join(root_directory, "output", program_name, str(i))
+		print(output_directory)
+
+		if os.path.exists(output_directory):
+			shutil.rmtree(output_directory)
+
+		os.makedirs(output_directory)
+
+		# start tmux
+		current_window_name = program_name + "_" + str(i)
+		cmd_line ="tmux send-keys -t %s 'tmux new-window -n %s' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux split-window -v' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux split-window -h' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+		
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -U' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+		
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux split-window -h' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+
+		cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t 0' ENTER;" % (tmux_name, current_window_name)
+		print(cmd_line)
+		os.system(cmd_line)
+		time.sleep(1)
+		
+		current_window_name = program_name + "_" + str(i)
+		for j in range(0, process_count):
+			print("current i:%d \tj:%d" % ( i, j ))
+			if 0 == j:
+				# master
+				cmd_line = ""
+				fuzz_cmd_line = ""
+				fuzz_cmd_line = get_symqemu_tmux_afl_command(root_directory, program_name, "Master", i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
+				#print(fuzz_cmd_line)
+
+				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
+				print(cmd_line)
+				os.system(cmd_line)
+				time.sleep(1)
+
+			else:
+				# symbolic execution
+				cmd_line = ""
+				fuzz_cmd_line = ""
+				fuzz_cmd_line = get_symqemu_tmux_solver_command(root_directory, program_name, i, j)
+				fuzz_cmd_line = "timeout " + timeout + " " + fuzz_cmd_line
+
+				cmd_line = "tmux send-keys -t %s 'tmux select-window -t %s && tmux select-pane -t %d && %s' ENTER;" % (tmux_name, current_window_name, j + 1, fuzz_cmd_line)
+				print(cmd_line)
+				os.system(cmd_line)
+				time.sleep(1)
+
+	print("[run_cxxfilt_fuzzer_tmux] ........ ok")
+	
 # symqemu end
 #######################################################################################################################################
 
